@@ -1,7 +1,9 @@
 '''Дополнительные данные для тестов web-сервиса «Яндекс.Самокат».'''
+FIREFOX_PATH = r'C:\DRIVERS\geckodriver-v0.35.0-win64\geckodriver.exe'
 MAIN_PAGE = 'https://qa-scooter.praktikum-services.ru/'
+REDIRECT = 'https://dzen.ru/?yredirect=true'
 
-# Вопросы и ответы в разделе «Вопросы о важном»
+# Вопросы и ответы в разделе «Вопросы о важном» главной страницы
 QUESTION_1 = 'Сколько это стоит? И как оплатить?'
 ANSWER_1 = 'Сутки — 400 рублей. Оплата курьеру — наличными или картой.'
 QUESTION_2 = 'Хочу сразу несколько самокатов! Так можно?'
@@ -27,9 +29,41 @@ ANSWER_7 = '''Да, пока самокат не привезли. Штрафа 
 записки тоже не попросим. Все же свои.'''
 QUESTION_8 = 'Я жизу за МКАДом, привезёте?'
 ANSWER_8 = 'Да, обязательно. Всем самокатов! И Москве, и Московской области.'
-# для фикстуры
-FAQ = (
+FAQ = (  # набор для фикстуры
     (QUESTION_1, ANSWER_1), (QUESTION_2, ANSWER_2), (QUESTION_3, ANSWER_3),
     (QUESTION_4, ANSWER_4), (QUESTION_5, ANSWER_5), (QUESTION_6, ANSWER_6),
     (QUESTION_7, ANSWER_7), (QUESTION_8, ANSWER_8)
 )
+# заголовки на странице создания заказа
+SCOOTER_FOR = 'Для кого самокат'
+RENT = 'Про аренду'
+CONFIRM_ORDER = 'Хотите оформить заказ?'
+BOOKED = 'Заказ оформлен'
+# наборы данных для заполнения формы
+CUSTOMER_1 = {
+    'name': 'Станислав', 'surname': 'Дробышевский', 'phone': '84951234567',
+    'address': 'Кафедра Антропологии МГУ', 'metro': 'Охотный Ряд'
+}
+CUSTOMER_2 = {
+    'name': 'Владимир', 'surname': 'Сурдин', 'phone': '84997654321',
+    'address': 'г.Москва, отдел Звездной астрофизики ГАИШ МГУ',
+    'metro': 'Университет'
+}
+RENT_1 = {
+    'date': '31.12.2024', 'days': 'сутки', 'color': 'black',
+    'comment': 'Поскорей!'
+}
+RENT_2 = {
+    'date': '01.01.2025', 'days': 'семеро суток',
+    'color': 'grey', 'comment': 'Можно не спешить...'
+}
+SCENARIO = [  # набор для фикстуры
+    {
+        'button': 'header', 'customer': CUSTOMER_1, 'rent': RENT_1,
+        'logo': ('yandex', REDIRECT)
+    },
+    {
+        'button': 'main', 'customer': CUSTOMER_2, 'rent': RENT_2,
+        'logo': ('scooter', MAIN_PAGE)
+    }
+]

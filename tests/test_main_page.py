@@ -2,7 +2,7 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 
-from data import MAIN_PAGE
+from data import FIREFOX_PATH, MAIN_PAGE
 from pages.main_page import MainPageQuestions
 
 
@@ -13,9 +13,7 @@ class TestMainPageQuestions:
         '''Создание драйвера браузера.'''
         options = webdriver.FirefoxOptions()
         options.add_argument(argument='--window-size=1920,1080')
-        service = Service(
-            executable_path=r'C:\DRIVERS\geckodriver-v0.35.0-win64\geckodriver.exe'
-        )
+        service = Service(executable_path=FIREFOX_PATH)
         cls.driver = webdriver.Firefox(service=service, options=options)
         cls.driver.get(MAIN_PAGE)
 
@@ -25,7 +23,10 @@ class TestMainPageQuestions:
         self.main_page = MainPageQuestions(self.driver, num)
         assert self.main_page.get_question_button_text() == question
         assert not self.main_page.check_answer_field_is_shown()
-        self.driver.execute_script('arguments[0].scrollIntoView()', self.main_page.question_button())
+        self.driver.execute_script(
+            'arguments[0].scrollIntoView()',
+            self.main_page.question_button()
+        )
         self.main_page.question_button_click()
         assert self.main_page.check_answer_field_is_shown()
         assert self.main_page.get_answer_field_text() == answer

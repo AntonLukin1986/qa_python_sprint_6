@@ -9,12 +9,12 @@ class MainPageQuestions:
 
     def __init__(self, driver, num):
         self.driver = driver
-        self.QUESTION = self.QUESTION[0], self.QUESTION[1].format(num)
-        self.ANSWER = self.ANSWER[0], self.ANSWER[1].format(num)
+        self.question = self.QUESTION[0], self.QUESTION[1].format(num)
+        self.answer = self.ANSWER[0], self.ANSWER[1].format(num)
 
     def question_button(self):
         '''Получение элемента "кнопка-вопрос".'''
-        return self.driver.find_element(*self.QUESTION)
+        return self.driver.find_element(*self.question)
 
     def get_question_button_text(self):
         '''Получение текста кнопки-вопроса.'''
@@ -26,7 +26,7 @@ class MainPageQuestions:
 
     def answer_field(self):
         '''Получение элемента "ответ на вопрос".'''
-        return self.driver.find_element(*self.ANSWER)
+        return self.driver.find_element(*self.answer)
 
     def get_answer_field_text(self):
         '''Получение текста ответа на вопрос.'''
