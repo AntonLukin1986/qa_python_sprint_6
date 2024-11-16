@@ -1,10 +1,12 @@
 '''Тесты страницы создания заказа web-сервиса «Яндекс.Самокат».'''
+import allure
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 import data
+from locators.base_page_locators import LOGO_SCOOTER
 from pages.order_page import OrderPage
 from pages.base_page import BasePageHeader
 
@@ -19,6 +21,7 @@ class TestOrderPage:
         service = Service(executable_path=data.FIREFOX_PATH)
         cls.driver = webdriver.Firefox(service=service, options=options)
 
+    @allure.step('Заполнение двух частей формы заказа')
     def fill_order_form(self, customer, rent):
         '''Заполнение двух частей формы заказа.'''
         assert self.main_page.get_form_title() == data.SCOOTER_FOR
@@ -30,10 +33,16 @@ class TestOrderPage:
         assert data.BOOKED in self.main_page.get_order_confirmed_title()
         self.main_page.status_btn_click()
 
+    @allure.description('Тестирование процесса создания заказа')
+    @allure.title('Проверка создания заказа')
+    @allure.step('Создание заказа')
     def test_create_order(self, scenario):
         '''Успешное создание заказа через кнопку «Заказать» в хэдере
         или в мэйне.'''
         self.driver.get(data.MAIN_PAGE)
+        WebDriverWait(self.driver, 5).until(
+            expected_conditions.visibility_of_element_located(LOGO_SCOOTER)
+        )
         self.main_page = OrderPage(self.driver)
         self.main_page.order_button_click(scenario['button'])
         self.fill_order_form(scenario['customer'], scenario['rent'])

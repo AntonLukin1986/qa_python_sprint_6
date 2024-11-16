@@ -1,4 +1,5 @@
 '''Тесты главной страницы web-сервиса «Яндекс.Самокат».'''
+import allure
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 
@@ -17,6 +18,12 @@ class TestMainPageQuestions:
         cls.driver = webdriver.Firefox(service=service, options=options)
         cls.driver.get(MAIN_PAGE)
 
+    @allure.description(
+        'Тестирование корректной работы раздела «Вопросы о важном» '
+        'главной страницы'
+    )
+    @allure.title('Тест отдельных элементов "вопрос-ответ"')
+    @allure.step('Обработка элемента "вопрос-ответ"')
     def test_answer_shows_after_click_on_question_button(self, faq):
         '''При нажатии на кнопку-вопрос отображается корректный ответ.'''
         num, question, answer = faq

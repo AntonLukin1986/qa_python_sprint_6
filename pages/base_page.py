@@ -1,4 +1,4 @@
-'''Page object главной страницы web-сервиса «Яндекс.Самокат».'''
+'''Page object с общими элементами web-сервиса «Яндекс.Самокат».'''
 from locators import base_page_locators as loc
 
 
