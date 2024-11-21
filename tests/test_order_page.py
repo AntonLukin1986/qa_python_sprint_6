@@ -1,59 +1,23 @@
 '''Тесты страницы создания заказа web-сервиса «Яндекс.Самокат».'''
 import allure
-from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
-
-import data
-from locators.base_page_locators import LOGO_SCOOTER
+import pytest
+from data import BOOKED, SCENARIO_1, SCENARIO_2
 from pages.order_page import OrderPage
-from pages.base_page import BasePageHeader
 
 
 class TestOrderPage:
-    '''Тесты процесса создания заказа.'''
-    @classmethod
-    def setup_class(cls):
-        '''Создание драйвера браузера.'''
-        options = webdriver.FirefoxOptions()
-        options.add_argument(argument='--window-size=1920,1080')
-        service = Service(executable_path=data.FIREFOX_PATH)
-        cls.driver = webdriver.Firefox(service=service, options=options)
-
-    @allure.step('Заполнение двух частей формы заказа')
-    def fill_order_form(self, customer, rent):
-        '''Заполнение двух частей формы заказа.'''
-        assert self.main_page.get_form_title() == data.SCOOTER_FOR
-        self.main_page.fill_customer_form(**customer)
-        assert self.main_page.get_form_title() == data.RENT
-        self.main_page.fill_rent_form_and_confirm(**rent)
-        assert data.CONFIRM_ORDER in self.main_page.get_confirmation_title()
-        self.main_page.yes_btn_click()
-        assert data.BOOKED in self.main_page.get_order_confirmed_title()
-        self.main_page.status_btn_click()
-
-    @allure.description('Тестирование процесса создания заказа')
-    @allure.title('Проверка создания заказа')
-    @allure.step('Создание заказа')
-    def test_create_order(self, scenario):
-        '''Успешное создание заказа через кнопку «Заказать» в хэдере
-        или в мэйне.'''
-        self.driver.get(data.MAIN_PAGE)
-        WebDriverWait(self.driver, 5).until(
-            expected_conditions.visibility_of_element_located(LOGO_SCOOTER)
-        )
-        self.main_page = OrderPage(self.driver)
-        self.main_page.order_button_click(scenario['button'])
-        self.fill_order_form(scenario['customer'], scenario['rent'])
-        logo, url = scenario['logo']
-        getattr(BasePageHeader(self.driver), f'{logo}_logo_click')()
-        self.driver.switch_to.window(self.driver.window_handles[-1])
-        WebDriverWait(self.driver, 5).until(
-            expected_conditions.url_to_be(url)
-        )
-        assert self.driver.current_url == url
-
-    @classmethod
-    def teardown_class(cls):
-        cls.driver.quit()
+    @allure.title('Создание заказа')
+    @pytest.mark.parametrize(
+        'scenario',
+        [pytest.param(SCENARIO_1, id='Header button'),
+         pytest.param(SCENARIO_2, id='Main button')]
+    )
+    def test_create_order_with_button_header_or_main(self, driver, scenario):
+        '''Создание заказа с использованием кнопки «Заказать» в хэдере
+        и на главной странице.'''
+        page_obj, customer, rent = scenario
+        self.page = page_obj(driver)
+        self.page.order_button_click()
+        self.order_page = OrderPage(driver)
+        self.order_page.create_order(customer, rent)
+        assert BOOKED in self.order_page.get_order_confirmed_title()

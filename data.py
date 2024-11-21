@@ -1,6 +1,10 @@
 '''Дополнительные данные для тестов web-сервиса «Яндекс.Самокат».'''
+from pages.main_page import MainPage
+from pages.header_page import HeaderPage
+
 FIREFOX_PATH = r'C:\DRIVERS\geckodriver-v0.35.0-win64\geckodriver.exe'
 MAIN_PAGE = 'https://qa-scooter.praktikum-services.ru/'
+ORDER_PAGE = MAIN_PAGE + 'order'
 REDIRECT = 'https://dzen.ru/?yredirect=true'
 
 # Вопросы и ответы в разделе «Вопросы о важном» главной страницы
@@ -29,11 +33,12 @@ ANSWER_7 = '''Да, пока самокат не привезли. Штрафа 
 записки тоже не попросим. Все же свои.'''
 QUESTION_8 = 'Я жизу за МКАДом, привезёте?'
 ANSWER_8 = 'Да, обязательно. Всем самокатов! И Москве, и Московской области.'
-FAQ = (  # набор для фикстуры
-    (QUESTION_1, ANSWER_1), (QUESTION_2, ANSWER_2), (QUESTION_3, ANSWER_3),
-    (QUESTION_4, ANSWER_4), (QUESTION_5, ANSWER_5), (QUESTION_6, ANSWER_6),
-    (QUESTION_7, ANSWER_7), (QUESTION_8, ANSWER_8)
-)
+FAQ = {
+    0: {'q': QUESTION_1, 'a': ANSWER_1}, 1: {'q': QUESTION_2, 'a': ANSWER_2},
+    2: {'q': QUESTION_3, 'a': ANSWER_3}, 3: {'q': QUESTION_4, 'a': ANSWER_4},
+    4: {'q': QUESTION_5, 'a': ANSWER_5}, 5: {'q': QUESTION_6, 'a': ANSWER_6},
+    6: {'q': QUESTION_7, 'a': ANSWER_7}, 7: {'q': QUESTION_8, 'a': ANSWER_8}
+}
 # заголовки на странице создания заказа
 SCOOTER_FOR = 'Для кого самокат'
 RENT = 'Про аренду'
@@ -50,20 +55,11 @@ CUSTOMER_2 = {
     'metro': 'Университет'
 }
 RENT_1 = {
-    'date': '31.12.2024', 'days': 'сутки', 'color': 'black',
-    'comment': 'Поскорей!'
+    'date': '31.12.2024', 'days': 'сутки', 'color': 'black', 'comment': ''
 }
 RENT_2 = {
-    'date': '01.01.2025', 'days': 'семеро суток',
-    'color': 'grey', 'comment': 'Можно не спешить...'
+    'date': '01.01.2025', 'days': 'семеро суток', 'color': 'grey',
+    'comment': 'Поскорей!'
 }
-SCENARIO = [  # набор для фикстуры
-    {
-        'button': 'header', 'customer': CUSTOMER_1, 'rent': RENT_1,
-        'logo': ('yandex', REDIRECT)
-    },
-    {
-        'button': 'main', 'customer': CUSTOMER_2, 'rent': RENT_2,
-        'logo': ('scooter', MAIN_PAGE)
-    }
-]
+SCENARIO_1 = HeaderPage, CUSTOMER_1, RENT_1
+SCENARIO_2 = MainPage, CUSTOMER_2, RENT_2

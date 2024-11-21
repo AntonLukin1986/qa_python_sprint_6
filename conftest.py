@@ -1,17 +1,18 @@
 '''Фикстуры для тестов web-сервиса «Яндекс.Самокат».'''
 import pytest
+from selenium import webdriver
+from selenium.webdriver.firefox.service import Service
 
-from data import FAQ, SCENARIO
-
-
-@pytest.fixture(scope='function', params=range(len(FAQ)))
-def faq(request):
-    '''Получение идентификатора элемента и текстов вопроса и ответа.'''
-    num = request.param
-    return num, *FAQ[num]
+from data import FIREFOX_PATH, MAIN_PAGE
 
 
-@pytest.fixture(scope='function', params=SCENARIO)
-def scenario(request):
-    '''Получение тестового сценария для создания заказа.'''
-    return request.param
+@pytest.fixture(scope='function')
+def driver():
+    '''Создание драйвера браузера.'''
+    options = webdriver.FirefoxOptions()
+    options.add_argument(argument='--window-size=1920,1080')
+    service = Service(executable_path=FIREFOX_PATH)
+    driver = webdriver.Firefox(service=service, options=options)
+    driver.get(MAIN_PAGE)
+    yield driver
+    driver.quit()
