@@ -2,7 +2,6 @@
 from pages.main_page import MainPage
 from pages.header_page import HeaderPage
 
-FIREFOX_PATH = r'C:\DRIVERS\geckodriver-v0.35.0-win64\geckodriver.exe'
 MAIN_PAGE = 'https://qa-scooter.praktikum-services.ru/'
 ORDER_PAGE = MAIN_PAGE + 'order'
 REDIRECT = 'https://dzen.ru/?yredirect=true'

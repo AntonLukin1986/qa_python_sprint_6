@@ -16,8 +16,7 @@ class TestOrderPage:
         '''Создание заказа с использованием кнопки «Заказать» в хэдере
         и на главной странице.'''
         page_obj, customer, rent = scenario
-        self.page = page_obj(driver)
-        self.page.order_button_click()
-        self.order_page = OrderPage(driver)
-        self.order_page.create_order(customer, rent)
-        assert BOOKED in self.order_page.get_order_confirmed_title()
+        page_obj(driver).order_button_click()
+        order_page = OrderPage(driver)
+        order_page.create_order(customer, rent)
+        assert BOOKED in order_page.get_order_confirmed_title()
