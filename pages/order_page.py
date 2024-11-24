@@ -4,8 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 from data import CONFIRM_ORDER, RENT, SCOOTER_FOR
-from .base_page import BasePage
 from locators import order_page_locators as loc
+from pages.base_page import BasePage
 
 
 class OrderPage(BasePage):

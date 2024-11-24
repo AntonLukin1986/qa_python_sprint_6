@@ -2,8 +2,8 @@
 import allure
 from selenium.webdriver.common.by import By
 
-from .base_page import BasePage
 from locators.patterns import A_CLS_CONTAINS, BUTTON, DIV_CLS_CONTAINS
+from pages.base_page import BasePage
 
 
 class HeaderPage(BasePage):

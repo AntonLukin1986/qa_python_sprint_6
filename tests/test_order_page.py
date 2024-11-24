@@ -1,6 +1,7 @@
 '''Тесты страницы создания заказа web-сервиса «Яндекс.Самокат».'''
 import allure
 import pytest
+
 from data import BOOKED, SCENARIO_1, SCENARIO_2
 from pages.order_page import OrderPage
 

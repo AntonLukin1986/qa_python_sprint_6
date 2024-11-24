@@ -1,6 +1,6 @@
 '''Дополнительные данные для тестов web-сервиса «Яндекс.Самокат».'''
-from pages.main_page import MainPage
 from pages.header_page import HeaderPage
+from pages.main_page import MainPage
 
 MAIN_PAGE = 'https://qa-scooter.praktikum-services.ru/'
 ORDER_PAGE = MAIN_PAGE + 'order'
