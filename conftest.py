@@ -9,7 +9,8 @@ from data import MAIN_PAGE
 def driver():
     '''Создание драйвера браузера.'''
     options = webdriver.FirefoxOptions()
-    options.add_argument(argument='--window-size=1920,1080')
+    options.add_argument('--width=1920')
+    options.add_argument('--height=1080')
     driver = webdriver.Firefox(options=options)
     driver.get(MAIN_PAGE)
     yield driver
